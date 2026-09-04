@@ -186,4 +186,15 @@ The RaceDay testing process is designed to confirm that:
 
 The successful GitHub Actions run also confirms that the repository's CI validation workflow completes successfully.
 
+## Future Improvements
+
+Future improvements to the RaceDay system could include:
+
+- Developing an application interface for users and organisers.
+- Adding authentication and authorisation functionality.
+- Providing dashboards for race organisers.
+- Adding more comprehensive automated database testing.
+- Connecting the database to a web or mobile application.
+- Expanding reporting functionality for race results and event statistics.
+
 RaceDay Project – 2026
