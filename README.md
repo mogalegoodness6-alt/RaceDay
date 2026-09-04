@@ -117,4 +117,14 @@ The RaceDay database includes:
 - Default constraints for providing automatic values where required.
 - Sample data for testing database functionality.
 
+  ## SQL Execution Order
+
+For successful execution, the RaceDay SQL scripts should be run in the appropriate order.
+
+1. Execute the database/table creation script.
+2. Confirm that the tables and constraints are created successfully.
+3. Execute the data insertion statements.
+4. Execute the testing script.
+5. Review the returned query results to confirm that the database is functioning correctly.
+
 RaceDay Project – 2026
