@@ -136,4 +136,14 @@ The repository contains the following main project files:
 - README.md – Provides project information and setup instructions.
 - .github/workflows/ci.yml – Contains the GitHub Actions CI workflow used to validate the repository.
 
+  ## Security Considerations
+
+Security considerations for the RaceDay database include:
+
+- User passwords are represented using PasswordHash rather than storing plain-text passwords.
+- User roles are restricted using database validation rules.
+- Primary and foreign keys help protect relationships between records.
+- Unique constraints help prevent duplicate user email addresses.
+- Input validation should be applied by the application before data is stored in the database.
+
 RaceDay Project – 2026
