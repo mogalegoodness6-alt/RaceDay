@@ -127,4 +127,13 @@ For successful execution, the RaceDay SQL scripts should be run in the appropria
 4. Execute the testing script.
 5. Review the returned query results to confirm that the database is functioning correctly.
 
+   ## Project Structure
+
+The repository contains the following main project files:
+
+- SQL database script – Contains the RaceDay database tables, constraints and sample data.
+- SQL testing script – Contains queries used to test and verify the database.
+- README.md – Provides project information and setup instructions.
+- .github/workflows/ci.yml – Contains the GitHub Actions CI workflow used to validate the repository.
+
 RaceDay Project – 2026
