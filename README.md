@@ -55,5 +55,19 @@ The RaceDay database consists of the following main entities:
 - Results – Stores participant race results.
 
 The database uses primary keys and foreign keys to maintain data integrity and establish relationships between related entities.
+## Testing Process
+
+The RaceDay testing script is used to verify that the database tables, relationships, sample data and queries are functioning correctly.
+
+The testing process includes:
+
+- Retrieving records from the database.
+- Testing relationships between related tables.
+- Using JOIN queries to retrieve related information.
+- Using ORDER BY to organise query results.
+- Checking that inserted sample data can be retrieved correctly.
+- Verifying that the database structure operates as expected.
+
+The testing script should be executed after the database script has been successfully completed.
 
 RaceDay Project – 2026
