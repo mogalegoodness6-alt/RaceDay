@@ -89,4 +89,20 @@ The SQL scripts should be executed in a SQL Server environment that supports:
 - CHECK constraints
 - DEFAULT constraints
 
+  ## Database Relationships
+
+The RaceDay database uses primary keys and foreign keys to connect related entities.
+
+Key relationships include:
+
+- Users → Events: Organisers can create and manage race events.
+- Events → Routes: Each event can have an associated race route.
+- Events → Weather: Weather information is associated with race events.
+- Events → Categories: Events can be associated with one or more race categories through the EventCategory table.
+- Users → Enrollments: Participants can register for race events.
+- Events → Enrollments: An event can have multiple participant enrollments.
+- Enrollments → Results: Participant results are linked to their event enrollment.
+
+These relationships help maintain referential integrity and reduce duplication within the database.
+
 RaceDay Project – 2026
