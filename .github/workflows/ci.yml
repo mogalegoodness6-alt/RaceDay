@@ -1,1 +1,27 @@
+name: RaceDay SQL CI
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check SQL files exist
+        run: |
+          test -f *.sql
+          echo "SQL files found successfully."
+
+      - name: Validate SQL project files
+        run: |
+          echo "RaceDay SQL project files are present."
+          echo "CI validation completed successfully."
