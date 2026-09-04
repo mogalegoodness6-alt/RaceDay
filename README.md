@@ -197,4 +197,18 @@ Future improvements to the RaceDay system could include:
 - Connecting the database to a web or mobile application.
 - Expanding reporting functionality for race results and event statistics.
 
+  ## Submission Checklist
+
+Before submission, the RaceDay repository should contain:
+
+- RaceDay SQL database script.
+- RaceDay testing script.
+- README documentation.
+- GitHub Actions CI workflow.
+- A successful green CI/CD build.
+- YouTube demonstration link.
+- All required project files committed to GitHub.
+
+The repository is maintained as the central location for the RaceDay project source files and documentation.
+
 RaceDay Project – 2026
