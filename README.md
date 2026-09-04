@@ -105,4 +105,16 @@ Key relationships include:
 
 These relationships help maintain referential integrity and reduce duplication within the database.
 
+## Database Features
+
+The RaceDay database includes:
+
+- Primary keys for uniquely identifying records.
+- Foreign keys for linking related tables.
+- Identity columns for automatically generated IDs.
+- Unique constraints for preventing duplicate email addresses.
+- CHECK constraints for validating permitted values.
+- Default constraints for providing automatic values where required.
+- Sample data for testing database functionality.
+
 RaceDay Project – 2026
