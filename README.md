@@ -146,4 +146,15 @@ Security considerations for the RaceDay database include:
 - Unique constraints help prevent duplicate user email addresses.
 - Input validation should be applied by the application before data is stored in the database.
 
+  ## Data Integrity
+
+The RaceDay database uses several mechanisms to maintain data integrity:
+
+- Primary keys ensure that each record has a unique identifier.
+- Foreign keys prevent invalid references between related tables.
+- NOT NULL constraints ensure that required information is provided.
+- UNIQUE constraints prevent duplicate values where uniqueness is required.
+- CHECK constraints restrict values to valid options.
+- DEFAULT constraints provide appropriate values when no value is supplied.
+
 RaceDay Project – 2026
