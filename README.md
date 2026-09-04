@@ -157,4 +157,21 @@ The RaceDay database uses several mechanisms to maintain data integrity:
 - CHECK constraints restrict values to valid options.
 - DEFAULT constraints provide appropriate values when no value is supplied.
 
+  ## Sample Data
+
+Sample records are included in the RaceDay database to demonstrate how the system can store and retrieve information.
+
+The sample data covers areas such as:
+
+- Users and user roles.
+- Race events.
+- Race categories.
+- Event-category relationships.
+- Race routes.
+- Weather information.
+- Participant enrollments.
+- Race results.
+
+This sample data supports testing of the database relationships and SQL queries.
+
 RaceDay Project – 2026
