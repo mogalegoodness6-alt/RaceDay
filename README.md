@@ -174,4 +174,16 @@ The sample data covers areas such as:
 
 This sample data supports testing of the database relationships and SQL queries.
 
+## Testing Outcomes
+
+The RaceDay testing process is designed to confirm that:
+
+- Database records can be retrieved successfully.
+- Related records can be retrieved using JOIN queries.
+- Results can be sorted using ORDER BY.
+- Data relationships are correctly maintained.
+- Sample records are available for testing.
+
+The successful GitHub Actions run also confirms that the repository's CI validation workflow completes successfully.
+
 RaceDay Project – 2026
