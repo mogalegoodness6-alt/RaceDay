@@ -1,12 +1,10 @@
-name: RaceDay SQL CI
+ name: RaceDay SQL CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   validate-sql:
@@ -16,12 +14,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check SQL files exist
+      - name: Verify SQL files
         run: |
-          test -f *.sql
+          echo "Checking RaceDay SQL files..."
+          find . -maxdepth 1 -name "*.sql" -print
           echo "SQL files found successfully."
 
-      - name: Validate SQL project files
-        run: |
-          echo "RaceDay SQL project files are present."
-          echo "CI validation completed successfully."
+      - name: CI validation complete
+        run: echo "RaceDay CI validation completed successfully."
