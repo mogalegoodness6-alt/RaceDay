@@ -70,4 +70,23 @@ The testing process includes:
 
 The testing script should be executed after the database script has been successfully completed.
 
+## Database Requirements
+
+The RaceDay database was developed using Microsoft SQL Server and can be managed using SQL Server Management Studio (SSMS).
+
+### Required Software
+
+- Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
+
+### Recommended Environment
+
+The SQL scripts should be executed in a SQL Server environment that supports:
+
+- T-SQL
+- IDENTITY columns
+- Primary and foreign key constraints
+- CHECK constraints
+- DEFAULT constraints
+
 RaceDay Project – 2026
