@@ -212,3 +212,90 @@ Before submission, the RaceDay repository should contain:
 The repository is maintained as the central location for the RaceDay project source files and documentation.
 
 RaceDay Project – 2026
+
+RaceDay — PROG POE Project
+Part 2: RESTful API Development
+Project Overview
+RaceDay is an event management system designed to support running, walking and cycling events. Part 2 extends the original project by developing an ASP.NET Core Web API using C# and SQL Server.
+
+The API provides endpoints for interacting with event-related information and is designed to support secure access and data management.
+
+Technologies Used
+C#
+ASP.NET Core Web API
+Microsoft SQL Server
+Entity Framework Core
+Swagger / OpenAPI
+GitHub and GitHub Actions
+Visual Studio
+Database
+The API connects to the RaceDayDB database hosted on SQL Server.
+
+The database includes tables for users, events, categories, event categories, enrollments, routes, weather and results.
+
+Entity Framework Core is used to map application models to database tables.
+
+Note: The database configuration must use the appropriate SQL Server instance and connection string for the environment in which the project is running.
+
+API Features
+The project includes API controllers for the following areas:
+
+User registration and authentication
+User information
+Event management
+Categories
+Event categories
+Participant enrollments
+Routes
+Weather information
+Race results
+Available operations depend on the endpoints implemented in the project.
+
+Authentication and Authorisation
+The API includes registration and login functionality.
+
+Role-based access is intended to distinguish between Organisers and Participants. Access to protected endpoints depends on the user’s authentication status and assigned role.
+
+Swagger Documentation
+Swagger provides an interactive interface for viewing and testing the API endpoints.
+
+To test the API:
+
+Run the RaceDayAPI project in Visual Studio.
+Open the Swagger interface provided by the application.
+Select an endpoint.
+Click Try it out.
+Enter the required information, if applicable.
+Click Execute to view the HTTP status code and response.
+Some endpoints require authentication. Use the authentication process configured in the application before testing protected operations.
+
+Running the Project
+Install a compatible .NET SDK and Visual Studio.
+Ensure that Microsoft SQL Server is available.
+Open the RaceDayAPI solution in Visual Studio.
+Check the database connection string in the application configuration.
+Ensure the database and required tables are available.
+Restore the NuGet packages.
+Build and run the project.
+Open the Swagger interface to explore the available API endpoints.
+Important: Update the connection string to match your own SQL Server instance. Do not publish database passwords or other secrets in this repository.
+
+Testing
+API endpoints can be tested using Swagger. Tests should cover successful requests, invalid input, authentication requirements and role-based access where applicable.
+
+Automated unit tests should be run using the .NET test command when a test project is configured:
+
+dotnet test
+
+Continuous Integration
+GitHub Actions can be used to automate the restoration, building and testing of the .NET project whenever changes are pushed to the repository.
+
+The workflow configuration is stored in the .github/workflows directory.
+
+A successful workflow run should be verified in the repository’s Actions tab.
+
+Project Repository
+GitHub: https://github.com/mogalegoodness6-alt/RaceDay
+
+Project Status
+This repository contains the RaceDay project files and documentation. The implementation status of individual features should be verified against the current source code and successful test results.
