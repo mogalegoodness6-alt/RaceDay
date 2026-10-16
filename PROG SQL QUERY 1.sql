@@ -286,4 +286,5 @@ INNER JOIN Events e
 ON en.EventID = e.EventID
 ORDER BY e.EventID, r.Position;
 
+Move SQL query 1 into docs.
 
