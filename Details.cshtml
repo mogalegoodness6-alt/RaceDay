@@ -1,0 +1,124 @@
+@model RaceDayMVC.Models.EventViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+
+    var categories = ViewBag.Categories as List<RaceDayMVC.Models.CategoryViewModel>
+                     ?? new List<RaceDayMVC.Models.CategoryViewModel>();
+}
+
+<a asp-action="Index" class="btn btn-link px-0">← Back to events</a>
+
+<div class="card border-0 shadow-sm overflow-hidden">
+
+    @if (!string.IsNullOrWhiteSpace(Model.BannerImageUrl))
+    {
+        <img src="@Model.BannerImageUrl"
+             class="detail-banner"
+             alt="Banner for @Model.Name" />
+    }
+
+    <div class="card-body p-4 p-md-5">
+
+        <span class="badge event-type mb-2">@Model.EventType</span>
+
+        <h1 class="display-6 fw-bold">@Model.Name</h1>
+
+        <p class="text-secondary">
+            📍 @Model.Location ·
+            @Model.Date.ToString("dddd, dd MMMM yyyy") ·
+            @Model.Distance km
+        </p>
+
+        <p>@Model.Description</p>
+
+        <hr class="my-4" />
+
+        @if (string.Equals(
+                Context.Session.GetString("Role"),
+                "Participant",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            <h2 class="h4 fw-bold mb-3">Choose your event category</h2>
+
+            @if (categories.Count > 0)
+            {
+                <p class="text-secondary">
+                    Select the category that matches your preferred distance
+                    and age group.
+                </p>
+
+                <form asp-controller="Participant"
+                      asp-action="Enrol"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="eventId"
+                           value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label for="categoryId" class="form-label fw-semibold">
+                            Available categories
+                        </label>
+
+                        <select id="categoryId"
+                                name="categoryId"
+                                class="form-select"
+                                required>
+
+                            <option value="">-- Select a category --</option>
+
+                            @foreach (var category in categories)
+                            {
+                                <option value="@category.CategoryID">
+                                    @category.CategoryName -
+                                    @category.DistanceKM km -
+                                    @category.ActivityType -
+                                    Ages @category.MinimumAge to @category.MaximumAge
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="small text-secondary">
+                            Your selected category determines the distance
+                            and age group for your enrolment.
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary"
+                            disabled="@(Model.Id <= 0)">
+                        Enrol Now
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    No categories are currently available for this event.
+                    Please contact the organiser.
+                </div>
+            }
+
+            @if (Model.Id <= 0)
+            {
+                <p class="text-danger mt-2">
+                    This event has an invalid ID. Please return to the events page.
+                </p>
+            }
+        }
+        else if (Context.Session.GetString("Role") is null)
+        {
+            <a asp-controller="Account"
+               asp-action="Login"
+               class="btn btn-primary">
+                Log in to enrol
+            </a>
+        }
+
+    </div>
+</div>
