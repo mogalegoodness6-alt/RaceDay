@@ -1,0 +1,20 @@
+@model List<EventViewModel>
+@{
+    ViewData["Title"] = "Participant home";
+}
+<div class="hero p-4 p-md-5 rounded-4 mb-4">
+    <span class="badge text-bg-warning mb-2">PARTICIPANT SPACE</span>
+    <h1 class="display-6 fw-bold">Ready for your next finish line?</h1>
+    <p class="mb-0">Explore upcoming events and choose your next challenge.</p>
+</div>
+<div class="row g-3">
+@foreach (var item in Model)
+{
+    <div class="col-md-6 col-lg-4"><div class="card event-card h-100"><div class="card-body">
+        <span class="badge event-type mb-2">@item.EventType</span><h2 class="h5">@item.Name</h2>
+        <p class="text-secondary small">📍 @item.Location</p><p>@item.Date.ToString("dd MMM yyyy") · @item.Distance km</p>
+        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary w-100">View event</a>
+    </div></div></div>
+}
+</div>
+@if (Model.Count == 0) { <div class="empty-state mt-3">No events loaded. Confirm the API is running and its route/response matches the MVC client.</div> }
