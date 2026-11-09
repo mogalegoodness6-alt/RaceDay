@@ -1,0 +1,106 @@
+@model IEnumerable<RaceDayMVC.Models.RaceResultViewModel>
+
+@{
+    ViewData["Title"] = "My Results";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold">My Race Results</h2>
+            <p class="text-muted mb-0">
+                View your finishing times, positions and race status.
+            </p>
+        </div>
+
+        <a asp-controller="Participant"
+           asp-action="Index"
+           class="btn btn-outline-primary">
+            Back to Events
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Result ID</th>
+                                <th>Enrolment ID</th>
+                                <th>Finishing Time</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var result in Model)
+                            {
+                                var status = result.ResultStatus ?? "Pending";
+
+                                var badgeClass = status.ToLowerInvariant() switch
+                                {
+                                    "completed" => "bg-success",
+                                    "disqualified" => "bg-danger",
+                                    _ => "bg-warning text-dark"
+                                };
+
+                                <tr>
+                                    <td>@result.ResultID</td>
+                                    <td>@result.EnrollmentID</td>
+                                    <td>
+                                        @(result.FinishTime.HasValue
+                                                                        ? result.FinishTime.Value.ToString(@"hh\:mm\:ss")
+                                                                        : "Not recorded")
+                                                                                     </td>
+                                                                                     <td>
+                                        @(result.Position.HasValue
+                                                                        ? result.Position.Value.ToString()
+                                                                        : "Not assigned")
+                            </td>
+                            <td>
+                                <span class="badge @badgeClass">
+                                    @status
+                                </span>
+                            </td>
+                        </tr>
+                                                }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <h5 class="fw-semibold">No results available yet</h5>
+                    <p class="text-muted mb-4">
+                        Your race results will appear here once they have been recorded.
+                    </p>
+
+                    <a asp-controller="Participant"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Browse Events
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
