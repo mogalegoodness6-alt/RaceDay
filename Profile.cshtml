@@ -1,0 +1,77 @@
+@model RaceDayMVC.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My profile";
+}
+
+<h1 class="h2 fw-bold mb-3">My profile</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form asp-controller="Participant"
+              asp-action="Profile"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label">
+                    First name
+                </label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label">
+                    Last name
+                </label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">
+                    Email address
+                </label>
+                <input asp-for="Email"
+                       class="form-control"
+                       readonly />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label">
+                    Phone number
+                </label>
+                <input asp-for="Phone"
+                       class="form-control"
+                       type="tel" />
+                <span asp-validation-for="Phone"
+                      class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Save changes
+            </button>
+        </form>
+    </div>
+</div>
