@@ -1,103 +1,43 @@
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using RaceDayAPI.Data;
+using RaceDayMVC.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<AzureBlobService>();
 
-builder.Services.AddDbContext<RaceDayDbContext>(options =>
-options.UseSqlServer(
-builder.Configuration.GetConnectionString("RaceDayConnection")));
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
 {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter your JWT token here."
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-{
-{
-new OpenApiSecurityScheme
-{
-Reference = new OpenApiReference
-{
-Type = ReferenceType.SecurityScheme,
-Id = "Bearer"
-}
-},
-Array.Empty<string>()
-}
+    options.Cookie.Name = ".RaceDay.Session";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
-});
-
-// JWT authentication
-var jwtKey = builder.Configuration["Jwt:Key"]
-?? throw new InvalidOperationException("JWT key is missing.");
-
-builder.Services.AddAuthentication(options =>
+builder.Services.AddHttpClient<RaceDayApiClient>((sp, client) =>
 {
-    options.DefaultAuthenticateScheme =
-    JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme =
-    JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(
-    Encoding.UTF8.GetBytes(jwtKey))
-    };
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var baseUrl = configuration["Api:BaseUrl"];
+    if (string.IsNullOrWhiteSpace(baseUrl))
+        throw new InvalidOperationException("Api:BaseUrl must be configured in appsettings.json.");
+    client.BaseAddress = new Uri(baseUrl);
 });
-
-builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapGet("/api/db-test", async (RaceDayDbContext db) =>
-{
-    try
-    {
-        bool connected = await db.Database.CanConnectAsync();
-
-        return connected
-        ? Results.Ok("Connected to RaceDayDB successfully!")
-        : Results.Problem("Could not connect to RaceDayDB.");
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(
-        detail: ex.Message,
-        statusCode: 500);
-    }
-});
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

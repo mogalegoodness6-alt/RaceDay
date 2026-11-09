@@ -1,0 +1,26 @@
+
+services:
+  api:
+    build:
+      context: C:/Users/Student/source/repos/RaceDayAPI
+      dockerfile: RaceDayAPI/Dockerfile
+    container_name: raceday-api
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      Jwt__Key: "${RACEDAY_JWT_KEY}"
+      ConnectionStrings__RaceDayConnection: "Server=host.docker.internal,1433;Database=RaceDayDB;User Id=raceday_docker;Password=${RACEDAY_DB_PASSWORD};TrustServerCertificate=True;Encrypt=False;"
+    ports:
+      - "8081:8080"
+
+  mvc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: raceday-mvc
+    depends_on:
+      - api
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      Api__BaseUrl: http://api:8080/
+    ports:
+      - "8080:8080"
