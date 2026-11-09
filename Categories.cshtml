@@ -1,0 +1,168 @@
+﻿@model List<RaceDayMVC.Models.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Category Management";
+    var events = ViewBag.Events as List<RaceDayMVC.Models.EventViewModel>
+                 ?? new List<RaceDayMVC.Models.EventViewModel>();
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="text-uppercase text-secondary small">Organiser space</span>
+            <h1 class="fw-bold">Category Management</h1>
+            <p class="text-secondary">Create and manage race categories and age groups.</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-primary">Back to Dashboard</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">Create a new category</h4>
+
+            <form asp-action="SaveCategory" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="CategoryID" value="0" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Category name</label>
+                        <input name="CategoryName" class="form-control"
+                               placeholder="e.g. Junior 5KM Fun Run" required />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Distance (KM)</label>
+                        <input name="DistanceKM" type="number" step="0.1"
+                               min="0.1" class="form-control" required />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Activity type</label>
+                        <select name="ActivityType" class="form-select" required>
+                            <option value="">Select activity</option>
+                            <option value="Run">Run</option>
+                            <option value="Walk">Walk</option>
+                            <option value="Cycle">Cycle</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Minimum age</label>
+                        <input name="MinimumAge" type="number" min="0"
+                               value="12" class="form-control" required />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Maximum age</label>
+                        <input name="MaximumAge" type="number" min="0"
+                               value="120" class="form-control" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">
+                    Create Category
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">Link a category to an event</h4>
+
+            <form asp-action="LinkCategory" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label class="form-label">Select event</label>
+                        <select name="eventId" class="form-select" required>
+                            <option value="">Choose an event</option>
+                            @foreach (var eventItem in events)
+                            {
+                                <option value="@eventItem.Id">@eventItem.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label class="form-label">Select category</label>
+                        <select name="categoryId" class="form-select" required>
+                            <option value="">Choose a category</option>
+                            @foreach (var category in Model)
+                            {
+                                <option value="@category.CategoryID">
+                                    @category.CategoryName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success w-100">
+                            Link
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">Existing categories</h4>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Distance</th>
+                            <th>Activity</th>
+                            <th>Age range</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var category in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@category.CategoryName</td>
+                                <td>@category.DistanceKM KM</td>
+                                <td>@category.ActivityType</td>
+                                <td>@category.MinimumAge - @category.MaximumAge</td>
+                                <td>
+                                    <form asp-action="DeleteCategory" method="post"
+                                          onsubmit="return confirm('Delete this category?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id"
+                                               value="@category.CategoryID" />
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

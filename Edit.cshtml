@@ -1,0 +1,23 @@
+@model EventViewModel
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create event" : "Edit event";
+}
+<div class="mb-4"><a asp-action="Index" class="btn btn-link px-0">← Dashboard</a><h1 class="h2 fw-bold">@(Model.Id == 0 ? "Create an event" : "Edit event")</h1><p class="text-secondary">Add clear details so participants know what to expect.</p></div>
+<div class="card border-0 shadow-sm"><div class="card-body p-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <form asp-action="Save" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input asp-for="Id" type="hidden" />
+        <div class="row g-3">
+            <div class="col-md-8"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+            <div class="col-md-4"><label asp-for="EventType" class="form-label">Event type</label><select asp-for="EventType" class="form-select"><option>Run</option><option>Walk</option><option>Cycle</option></select><span asp-validation-for="EventType" class="text-danger"></span></div>
+            <div class="col-12"><label asp-for="Description" class="form-label"></label><textarea asp-for="Description" rows="4" class="form-control"></textarea><span asp-validation-for="Description" class="text-danger"></span></div>
+            <div class="col-md-6"><label asp-for="Date" class="form-label"></label><input asp-for="Date" type="datetime-local" class="form-control" /><span asp-validation-for="Date" class="text-danger"></span></div>
+            <div class="col-md-6"><label asp-for="Location" class="form-label"></label><input asp-for="Location" class="form-control" /><span asp-validation-for="Location" class="text-danger"></span></div>
+            <div class="col-md-6"><label asp-for="Distance" class="form-label">Distance (km)</label><input asp-for="Distance" type="number" step="0.1" class="form-control" /><span asp-validation-for="Distance" class="text-danger"></span></div>
+            <div class="col-md-6"><label class="form-label" for="bannerImage">Event banner image</label><input class="form-control" type="file" id="bannerImage" name="bannerImage" accept="image/*" /><div class="form-text">The MVC app sends the image to the API; it does not upload directly to Azure.</div></div>
+        </div>
+        <div class="mt-4 d-flex gap-2"><button class="btn btn-primary">Save event</button><a asp-action="Index" class="btn btn-outline-secondary">Cancel</a></div>
+    </form>
+</div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
