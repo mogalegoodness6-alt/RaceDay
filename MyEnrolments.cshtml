@@ -1,0 +1,81 @@
+@model IEnumerable<RaceDayMVC.Models.EnrollmentViewModel>
+
+@{
+    ViewData["Title"] = "My enrolments";
+}
+
+<h1 class="h2 fw-bold mb-3">My enrolments</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        Could not load your enrolments: @ViewBag.Error
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        You have no enrolments yet. Visit the Events page to explore available events.
+    </div>
+    <a asp-controller="Participant"
+       asp-action="Index"
+       class="btn btn-primary">
+        Browse events
+    </a>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Enrolment ID</th>
+                    <th>Event ID</th>
+                    <th>Enrolment date</th>
+                    <th>Race number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrolment in Model)
+                {
+                    <tr>
+                        <td>@enrolment.EnrollmentID</td>
+                        <td>@enrolment.EventID</td>
+                        <td>@enrolment.EnrollmentDate.ToString("dd MMM yyyy")</td>
+                        <td>@enrolment.RaceNumber</td>
+                        <td>
+                            <span class="badge bg-success">Enrolled</span>
+                        </td>
+                        <td>
+                            <form asp-controller="Participant"
+                                  asp-action="CancelEnrolment"
+                                  method="post"
+                                  onsubmit="return confirm('Are you sure you want to cancel this enrolment?');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden"
+                                       name="id"
+                                       value="@enrolment.EnrollmentID" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Cancel
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
