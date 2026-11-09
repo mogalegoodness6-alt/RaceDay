@@ -1,0 +1,18 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Create account";
+}
+<div class="auth-wrap"><div class="card border-0 shadow-sm"><div class="card-body p-4 p-md-5">
+    <span class="badge text-bg-warning mb-2">JOIN THE COMMUNITY</span>
+    <h1 class="h2 fw-bold">Create your account</h1>
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3"><label asp-for="FullName" class="form-label">Full name</label><input asp-for="FullName" class="form-control" /><span asp-validation-for="FullName" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="Email" class="form-label"></label><input asp-for="Email" class="form-control" autocomplete="email" /><span asp-validation-for="Email" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="Password" class="form-label"></label><input asp-for="Password" class="form-control" autocomplete="new-password" /><span asp-validation-for="Password" class="text-danger"></span><div class="form-text">Use at least 8 characters.</div></div>
+        <div class="mb-3"><label asp-for="Role" class="form-label">Account type</label><select asp-for="Role" class="form-select"><option>Participant</option><option>Organiser</option></select><span asp-validation-for="Role" class="text-danger"></span></div>
+        <button class="btn btn-primary w-100">Register</button>
+    </form>
+</div></div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
