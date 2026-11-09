@@ -1,0 +1,35 @@
+:root {
+    --race-navy: #10233f;
+    --race-blue: #2563eb;
+    --race-yellow: #ffc928;
+    --race-bg: #f3f6fb;
+    --race-text: #152238;
+}
+html { font-size: 16px; }
+body { background: var(--race-bg); color: var(--race-text); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+.raceday-nav { background: var(--race-navy); box-shadow: 0 4px 18px #10233f1a; }
+.navbar-brand { letter-spacing: .3px; }
+.hero { color: white; background: linear-gradient(120deg, #10233f, #1e4c91); position: relative; overflow: hidden; }
+.hero h1 { letter-spacing: -.04em; }
+.hero .lead { color: #e3edff; }
+.btn-primary { background: var(--race-blue); border-color: var(--race-blue); }
+.btn-warning { background: var(--race-yellow); border-color: var(--race-yellow); color: #152238; font-weight: 700; }
+.event-card { border: 0; border-radius: 1rem; overflow: hidden; box-shadow: 0 8px 26px #10233f0b; transition: transform .15s ease, box-shadow .15s ease; }
+.event-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px #10233f15; }
+.event-placeholder { height: 130px; display: grid; place-items: center; font-size: 3rem; background: linear-gradient(135deg, #dbeafe, #eff6ff); }
+.event-image { width: 100%; height: 150px; object-fit: cover; }
+.detail-banner { width: 100%; max-height: 330px; object-fit: cover; }
+.event-type { background: #e0ecff; color: #1746a2; }
+.auth-wrap { max-width: 520px; margin: 1.5rem auto; }
+.auth-wrap .card { border-radius: 1.25rem; }
+.form-control, .form-select { min-height: 44px; border-color: #d6deea; }
+.form-control:focus, .form-select:focus, .btn:focus-visible, a:focus-visible { outline: 3px solid #f4b400; outline-offset: 2px; box-shadow: none; }
+.empty-state { background: white; border: 1px dashed #c5d1e2; border-radius: 1rem; padding: 2rem; text-align: center; }
+.eyebrow { font-size: .75rem; letter-spacing: .12em; font-weight: 800; color: #45648e; }
+.stat-card { background: white; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 5px 20px #10233f08; }
+.stat-card span { display: block; color: #62728a; font-size: .9rem; }
+.stat-card strong { display: block; font-size: 2rem; color: var(--race-navy); }
+.status-pill { display: inline-block; border-radius: 999px; padding: .25rem .65rem; background: #dcfce7; color: #166534; font-weight: 700; }
+.table thead th { color: #61718a; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+footer { border-top: 1px solid #e0e7f0; margin-top: 2rem; }
+@media (max-width: 576px) { .hero { border-radius: .8rem !important; } .display-5 { font-size: 2.2rem; } }
